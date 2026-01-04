@@ -14,9 +14,11 @@ interface HeroSectionProps {
 // Background Component
 function HeroBackground({ activeRole }: { activeRole: Role }) {
     const [dimensions, setDimensions] = useState({ width: 1000, height: 800 });
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
         setDimensions({ width: window.innerWidth, height: window.innerHeight });
+        setMounted(true);
     }, []);
 
     return (
@@ -42,8 +44,8 @@ function HeroBackground({ activeRole }: { activeRole: Role }) {
                 <div className="w-full h-full animate-grid-flow"></div>
             </div>
 
-            {/* Floating Particles */}
-            {[...Array(5)].map((_, i) => (
+            {/* Floating Particles - Only render on client to avoid hydration mismatch */}
+            {mounted && [...Array(5)].map((_, i) => (
                 <motion.div
                     key={i}
                     initial={{
@@ -184,7 +186,7 @@ export default function HeroSection({ activeRole, setActiveRole }: HeroSectionPr
                                         className="absolute inset-0 bg-cyan-500 blur-3xl z-0 pointer-events-none mix-blend-overlay opacity-30"
                                     />
 
-                                    <h1 className="text-5xl sm:text-7xl md:text-9xl lg:text-[11rem] xl:text-[13rem] 2xl:text-[16rem] font-heading font-extrabold tracking-tighter relative z-10 select-none leading-[0.85] text-center drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                                    <h1 className="text-5xl sm:text-7xl md:text-6xl lg:text-[7rem] xl:text-[7rem] 2xl:text-[9rem] font-heading font-extrabold tracking-tighter relative z-10 select-none leading-[1em] text-center drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">
                                         <span className="block glitch text-white" data-text="DIPEN">DIPEN</span>
                                         <span className="block glitch text-neutral-600 transition-colors duration-700 group-hover:text-cyan-700" data-text="MAGDANI">MAGDANI</span>
                                     </h1>
@@ -215,11 +217,11 @@ export default function HeroSection({ activeRole, setActiveRole }: HeroSectionPr
                                         className="absolute inset-0 bg-fuchsia-500 blur-3xl z-0 pointer-events-none mix-blend-overlay opacity-30"
                                     />
 
-                                    <h1
-                                        className="text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] xl:text-[12rem] 2xl:text-[14rem] font-heading font-extrabold tracking-tighter text-white relative z-10 select-none leading-[0.85] glitch mb-4 drop-shadow-[0_0_15px_rgba(232,121,249,0.3)] break-words w-full text-center"
-                                        data-text="VAJRATHEASTRA"
-                                    >
-                                        VAJRA<span className="text-fuchsia-900/80 group-hover:text-fuchsia-600 transition-colors duration-500">THE</span>ASTRA
+                                    <h1 className="text-5xl sm:text-7xl md:text-6xl lg:text-[7rem] xl:text-[7rem] 2xl:text-[9rem] font-heading font-extrabold tracking-tighter relative z-10 select-none leading-[1em] text-center drop-shadow-[0_0_15px_rgba(232,121,249,0.3)]">
+                                        <span className="block glitch text-white" data-text="VAJRA">VAJRA</span>
+                                        <span className="block glitch text-neutral-400 transition-colors duration-700 group-hover:text-fuchsia-600" data-text="THE ASTRA">
+                                            <span className="opacity-80">THE</span> ASTRA
+                                        </span>
                                     </h1>
 
                                     <motion.div
@@ -244,7 +246,7 @@ export default function HeroSection({ activeRole, setActiveRole }: HeroSectionPr
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
                             transition={{ duration: 0.5, ease: [0.33, 1, 0.68, 1] }}
-                            className={`text-base md:text-2xl font-medium tracking-[0.2em] uppercase absolute w-full left-0 right-0 flex items-center justify-center gap-4 ${activeRole === 'developer' ? 'text-cyan-100' : 'text-fuchsia-100'
+                            className={`text-base md:text-2xl font-medium tracking-[0.2em] h-10 uppercase absolute w-full left-0 right-0 flex items-center justify-center gap-4 ${activeRole === 'developer' ? 'text-cyan-100' : 'text-fuchsia-100'
                                 }`}
                         >
                             <span className={`w-8 h-px ${activeRole === 'developer' ? 'bg-cyan-500' : 'bg-fuchsia-500'}`}></span>

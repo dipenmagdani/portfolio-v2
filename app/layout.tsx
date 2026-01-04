@@ -17,7 +17,7 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   title: {
     default: "Dipen Magdani | Frontend Developer & Designer",
-    template: "%s | Dipen Magdani",
+    template: " Dipen Magdani",
   },
   description:
     "Dipen Magdani is a Frontend Developer and UI/UX Designer crafting scalable, high-performance web applications and immersive digital experiences. Also known as Vajratheastra.",
@@ -32,19 +32,22 @@ export const metadata: Metadata = {
     "Web Developer",
     "Visual Designer",
   ],
-  authors: [{ name: "Dipen Magdani", url: "https://dipenmagdani.com" }],
+  icons: {
+    icon: "/icon.png",
+  },
+  authors: [{ name: "Dipen Magdani", url: "https://www.dipen.live" }],
   creator: "Dipen Magdani",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://dipenmagdani.com",
+    url: "https://www.dipen.live",
     siteName: "Dipen Magdani Portfolio",
     title: "Dipen Magdani | Frontend Developer & Designer",
     description:
       "Crafting scalable, high-performance web applications and immersive digital experiences.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/icon.png",
         width: 1200,
         height: 630,
         alt: "Dipen Magdani - Frontend Developer & Designer",
@@ -56,7 +59,7 @@ export const metadata: Metadata = {
     title: "Dipen Magdani | Frontend Developer & Designer",
     description:
       "Crafting scalable, high-performance web applications and immersive digital experiences.",
-    images: ["/og-image.png"],
+    images: ["/icon.png"],
     creator: "@dipenmagdani",
   },
   robots: {
@@ -69,11 +72,6 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
-  },
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
   },
 };
 
@@ -93,7 +91,7 @@ export default function RootLayout({
               "@type": "Person",
               name: "Dipen Magdani",
               alternateName: "Vajratheastra",
-              url: "https://dipenmagdani.com",
+              url: "https://www.dipen.live",
               jobTitle: "Frontend Developer & UI/UX Designer",
               description:
                 "Frontend Developer and UI/UX Designer crafting scalable web applications and immersive digital experiences.",

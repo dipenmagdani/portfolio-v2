@@ -11,7 +11,7 @@ interface RoleToggleProps {
 
 export default function RoleToggle({ activeRole, onChange }: RoleToggleProps) {
     return (
-        <div className="inline-flex bg-neutral-900/90 backdrop-blur-xl border border-neutral-800 rounded-full relative shadow-2xl overflow-hidden w-[320px] h-[60px]">
+        <div className="inline-flex bg-neutral-900/90 backdrop-blur-xl border border-neutral-800 rounded-full relative shadow-2xl overflow-hidden w-[320px] h-[60px] mt-4">
             {/* Developer Button */}
             <button
                 onClick={() => onChange('developer')}

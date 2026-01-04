@@ -1,6 +1,6 @@
 import { Project, Skill, Experience, Education, Award, NavLink } from './types';
 
-export const CLOUDINARY_URL = 'https://res.cloudinary.com/daunbe0fn/image/upload/v1754929632/';
+export const CLOUDINARY_URL = process.env.NEXT_PUBLIC_CLOUDINARY_URL;
 
 export const NAV_LINKS: NavLink[] = [
   { name: 'Home', href: '#home' },
@@ -117,7 +117,7 @@ export const PROJECTS: Project[] = [
     description: 'Transforms complex data workflows into seamless experiences. Build, automate, and scale pipelines with an intuitive expression builder and no-code interface.',
     role: 'developer',
     tags: ['React', 'TanStack', 'Zod', 'Framer Motion'],
-    image: 'https://placehold.co/800x600/050505/38bdf8?text=MagicData',
+    image: '/projects/magicdata.png',
     category: 'web'
   },
   {
@@ -126,7 +126,7 @@ export const PROJECTS: Project[] = [
     description: 'Enterprise-grade dashboard for GSP operations. Features real-time analytics, SDO management, and high-performance order processing.',
     role: 'developer',
     tags: ['React 18', 'Redux', 'AG Grid', 'SASS'],
-    image: 'https://placehold.co/800x600/050505/38bdf8?text=Riddhi+GSP',
+    image: '/projects/riddhigsp.png',
     category: 'web'
   },
   {
@@ -135,7 +135,7 @@ export const PROJECTS: Project[] = [
     description: 'Modern career portal for a digital entertainment giant. Features interactive job search, real-time filtering, and a sophisticated design system.',
     role: 'developer',
     tags: ['Next.js 15', 'Tailwind', 'Husky'],
-    image: 'https://placehold.co/800x600/050505/38bdf8?text=Fest+Pass',
+    image: '/projects/festpass.png',
     category: 'web'
   },
   {
@@ -144,7 +144,7 @@ export const PROJECTS: Project[] = [
     description: 'Comprehensive SaaS for promotional workflows. Automates order entry, artwork proofing, and vendor confirmation with multi-tenant support.',
     role: 'developer',
     tags: ['React 18', 'Hook Form', 'TanStack'],
-    image: 'https://placehold.co/800x600/050505/38bdf8?text=PromoBeacon',
+    image: '/projects/promobeacon.png',
     category: 'web'
   },
   {
@@ -153,7 +153,7 @@ export const PROJECTS: Project[] = [
     description: 'Enterprise admin dashboard for Life Sciences. Features Azure AD security, automated API integration, and modular architecture.',
     role: 'developer',
     tags: ['React 19', 'MSAL', 'Docker', 'TanStack'],
-    image: 'https://placehold.co/800x600/050505/38bdf8?text=PV+Tool',
+    image: '/projects/pvtool.png',
     category: 'web'
   },
   {
@@ -162,7 +162,7 @@ export const PROJECTS: Project[] = [
     description: 'A modern full-stack music streaming platform delivering a seamless audio experience. Features real-time playback, dynamic playlist management, and an immersive UI.',
     role: 'developer',
     tags: ['Next.js', 'Node.js', 'Redux', 'Tailwind'],
-    image: 'https://placehold.co/800x600/050505/38bdf8?text=Harmoniq',
+    image: '/projects/harmoniq.png',
     category: 'web'
   },
   
@@ -173,7 +173,7 @@ export const PROJECTS: Project[] = [
     description: 'Explore my complete collection of case studies, branding projects, and visual experiments on Behance.',
     role: 'designer',
     tags: ['Behance', 'Portfolio', 'Case Studies'],
-    image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2940&auto=format&fit=crop',
+    image: '/projects/behance.png',
     category: 'web',
     link: 'https://www.behance.net/dipen_magdani'
   },
@@ -183,7 +183,8 @@ export const PROJECTS: Project[] = [
     description: 'Enhanced user engagement through a modern, intuitive mobile app interface design.',
     role: 'designer',
     tags: ['UI/UX', 'Mobile Design', 'Prototyping'],
-    image: 'https://picsum.photos/seed/jeevan/1600/1000',
+    image: '/projects/jeevansathi.png',
+    figmaUrl: 'https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FHrn8HLp74z22P7G8EkoIuv%2FJeevanSathi%3Ftype%3Ddesign%26node-id%3D0%253A1%26mode%3Ddesign%26t%3DNTwMGN672xXkG3t4-1',
     category: 'mobile'
   },
   {
@@ -193,7 +194,8 @@ export const PROJECTS: Project[] = [
     role: 'designer',
     tags: ['Web Design', 'Layout', 'Visual Hierarchy'],
     metrics: '30% Improved Responsiveness',
-    image: 'https://picsum.photos/seed/padel/1600/1000',
+    image: '/projects/padelcourt.png',
+    figmaUrl: 'https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/design/AItwX8Of1F4ursKDFN0Wxz/Milo-s-Paddle?node-id=0-1&t=6PVmqzh54VygoYiC-1',
     category: 'web'
   },
   {
@@ -203,7 +205,7 @@ export const PROJECTS: Project[] = [
     role: 'designer',
     tags: ['Branding', 'Typography', 'Color Theory'],
     metrics: '20% Productivity Boost',
-    image: 'https://picsum.photos/seed/brand/1600/1000',
+    image: '/projects/branding.png',
     category: 'brand'
   },
 
@@ -243,7 +245,6 @@ export const SKILLS_DEV: Skill[] = [
     items: [
       { name: 'Node.js', level: 75 },
       { name: 'Express', level: 75 },
-      { name: 'Django', level: 70 },
       { name: 'MongoDB', level: 72 }
     ] 
   },
@@ -252,7 +253,6 @@ export const SKILLS_DEV: Skill[] = [
     items: [
       { name: 'Git', level: 85 },
       { name: 'Webpack', level: 60 },
-      { name: 'Performance', level: 80 }
     ] 
   },
 ];
@@ -304,7 +304,7 @@ export const EXPERIENCE: Experience[] = [
 export const EDUCATION: Education = {
   degree: 'Bachelor of Engineering in Computer Engineering',
   institution: 'Gujarat Technological University',
-  details: 'CGPA: 8.54 | Sep 2022 - Pursuing'
+  details: 'CGPA: 8.54 | 2022-2025'
 };
 
 export const AWARDS: Award[] = [

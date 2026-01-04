@@ -92,7 +92,7 @@ export default function ProjectsSection({ activeRole }: ProjectsSectionProps) {
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
                                 transition={{ duration: 0.5 }}
-                                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+                                className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6"
                             >
                                 {filteredProjects.map((project, index) => (
                                     <motion.div
@@ -100,37 +100,37 @@ export default function ProjectsSection({ activeRole }: ProjectsSectionProps) {
                                         initial={{ opacity: 0, y: 30 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: index * 0.1, duration: 0.5 }}
-                                        className="group relative flex flex-col rounded-xl overflow-hidden bg-neutral-900/40 border border-white/5 hover:border-cyan-500/30 transition-all duration-500 h-[500px] hover:shadow-[0_0_30px_-5px_rgba(6,182,212,0.15)]"
+                                        className="group relative flex flex-col rounded-xl overflow-hidden bg-neutral-900/40 border border-white/5 hover:border-cyan-500/30 transition-all duration-500 h-[320px] sm:h-[400px] md:h-[500px] hover:shadow-[0_0_30px_-5px_rgba(6,182,212,0.15)]"
                                     >
                                         {/* Image Area */}
-                                        <div className="h-[240px] shrink-0 overflow-hidden relative">
+                                        <div className="h-[140px] sm:h-[180px] md:h-[240px] shrink-0 overflow-hidden relative">
                                             <div className="absolute inset-0 bg-neutral-800 animate-pulse z-0" />
                                             <Image
                                                 src={project.image}
                                                 alt={project.title}
                                                 fill
                                                 className="object-cover transition-transform duration-700 group-hover:scale-105 relative z-10 grayscale group-hover:grayscale-0"
-                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                sizes="(max-width: 768px) 50vw, 33vw"
                                             />
                                             <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent opacity-90" />
                                         </div>
 
                                         {/* Content Area */}
-                                        <div className="flex-1 flex flex-col p-6 relative -mt-8 z-20">
+                                        <div className="flex-1 flex flex-col p-3 sm:p-4 md:p-6 relative -mt-5 sm:-mt-6 md:-mt-8 z-20">
                                             <div className="backdrop-blur-xl bg-neutral-950/90 absolute inset-0 border-t border-white/5 rounded-t-xl" />
                                             <div className="relative z-10 flex flex-col h-full">
-                                                <div className="flex justify-between items-start mb-3">
-                                                    <h3 className="text-xl font-bold text-white group-hover:text-cyan-200 transition-colors tracking-tight leading-tight">{project.title}</h3>
-                                                    <div className="p-2 shrink-0 rounded-full bg-white/5 text-neutral-400 group-hover:bg-cyan-500 group-hover:text-black transition-all duration-300 transform group-hover:-translate-y-1 group-hover:translate-x-1">
-                                                        <FiArrowUpRight className="w-4 h-4" />
+                                                <div className="flex justify-between items-start mb-1.5 md:mb-3">
+                                                    <h3 className="text-sm sm:text-lg md:text-xl font-bold text-white group-hover:text-cyan-200 transition-colors tracking-tight leading-tight line-clamp-1 md:line-clamp-none">{project.title}</h3>
+                                                    <div className="p-1.5 md:p-2 shrink-0 rounded-full bg-white/5 text-neutral-400 group-hover:bg-cyan-500 group-hover:text-black transition-all duration-300 transform group-hover:-translate-y-1 group-hover:translate-x-1">
+                                                        <FiArrowUpRight className="w-3 h-3 md:w-4 md:h-4" />
                                                     </div>
                                                 </div>
-                                                <p className="text-neutral-400 text-sm leading-relaxed mb-4 line-clamp-3">
+                                                <p className="text-neutral-400 text-[10px] sm:text-xs md:text-sm leading-relaxed mb-3 md:mb-4 line-clamp-3 md:line-clamp-4">
                                                     {project.description}
                                                 </p>
-                                                <div className="flex flex-wrap gap-2 mt-auto">
-                                                    {project.tags.slice(0, 4).map(tag => (
-                                                        <span key={tag} className="text-[10px] uppercase tracking-wider font-medium text-cyan-700 border border-cyan-900/30 px-2.5 py-1 rounded-full bg-cyan-950/20">
+                                                <div className="flex flex-wrap gap-1 md:gap-2 mt-auto">
+                                                    {project.tags.slice(0, 3).map(tag => (
+                                                        <span key={tag} className="text-[8px] md:text-[10px] uppercase tracking-wider font-medium text-cyan-700 border border-cyan-900/30 px-1.5 py-0.5 md:px-2.5 md:py-1 rounded-full bg-cyan-950/20">
                                                             {tag}
                                                         </span>
                                                     ))}
@@ -159,10 +159,11 @@ export default function ProjectsSection({ activeRole }: ProjectsSectionProps) {
                                             viewport={{ once: true }}
                                             transition={{ delay: index * 0.1 }}
                                             className="group cursor-pointer relative"
+                                            onClick={() => setSelectedProject(project)}
                                         >
                                             {project.id === 'behance-profile' ? (
                                                 <a href={project.link} target="_blank" rel="noopener noreferrer" className="block h-full">
-                                                    <div className="aspect-[16/10] overflow-hidden rounded-xl mb-6 relative border border-fuchsia-900/50 group-hover:border-fuchsia-500 transition-colors duration-500 shadow-[0_0_15px_rgba(232,121,249,0.1)] group-hover:shadow-[0_0_30px_-5px_rgba(232,121,249,0.3)]">
+                                                    <div className="aspect-video bg-blue-400 hover:bg-white overflow-hidden rounded-xl mb-6 relative border border-fuchsia-900/50 group-hover:border-fuchsia-500 transition-colors duration-500 shadow-[0_0_15px_rgba(232,121,249,0.1)] group-hover:shadow-[0_0_30px_-5px_rgba(232,121,249,0.3)]">
                                                         <Image
                                                             src={project.image}
                                                             alt={project.title}
@@ -188,13 +189,13 @@ export default function ProjectsSection({ activeRole }: ProjectsSectionProps) {
                                                 </a>
                                             ) : (
                                                 <>
-                                                    <div className="aspect-[16/10] overflow-hidden rounded-xl mb-6 relative border border-white/5 group-hover:border-fuchsia-500/30 transition-colors duration-500 shadow-lg group-hover:shadow-fuchsia-900/20">
+                                                    <div className="aspect-video overflow-hidden rounded-xl mb-6 relative border border-white/5 group-hover:border-fuchsia-500/30 transition-colors duration-500 shadow-lg group-hover:shadow-fuchsia-900/20">
                                                         <Image
                                                             src={project.image}
                                                             alt={project.title}
                                                             fill
                                                             className="object-cover transition-transform duration-1000 group-hover:scale-105 brightness-100"
-                                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                                            sizes=""
                                                         />
                                                         <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
                                                     </div>

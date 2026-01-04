@@ -9,6 +9,7 @@ export interface Project {
   image: string;
   metrics?: string;
   link?: string;
+  figmaUrl?: string;
   category?: 'web' | 'mobile' | 'brand' | 'art';
 }
 
