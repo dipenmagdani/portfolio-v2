@@ -1,11 +1,13 @@
 import { MetadataRoute } from 'next';
 
+const BASE_URL = 'https://dipenmagdani.live';
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://dipenmagdani.com/sitemap.xml',
+    sitemap: `${BASE_URL}/sitemap.xml`,
   };
 }

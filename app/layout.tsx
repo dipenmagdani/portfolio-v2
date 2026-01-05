@@ -14,10 +14,13 @@ const manrope = Manrope({
   display: "swap",
 });
 
+const BASE_URL = 'https://dipenmagdani.live';
+
 export const metadata: Metadata = {
+  metadataBase: new URL(BASE_URL),
   title: {
     default: "Dipen Magdani | Frontend Developer & Designer",
-    template: " Dipen Magdani",
+    template: "%s | Dipen Magdani",
   },
   description:
     "Dipen Magdani is a Frontend Developer and UI/UX Designer crafting scalable, high-performance web applications and immersive digital experiences. Also known as Vajratheastra.",
@@ -35,19 +38,22 @@ export const metadata: Metadata = {
   icons: {
     icon: "/icon.png",
   },
-  authors: [{ name: "Dipen Magdani", url: "https://www.dipen.live" }],
+  authors: [{ name: "Dipen Magdani", url: BASE_URL }],
   creator: "Dipen Magdani",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://www.dipen.live",
+    url: BASE_URL,
     siteName: "Dipen Magdani Portfolio",
     title: "Dipen Magdani | Frontend Developer & Designer",
     description:
       "Crafting scalable, high-performance web applications and immersive digital experiences.",
     images: [
       {
-        url: "/icon.png",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Dipen Magdani - Frontend Developer & Designer",
@@ -59,7 +65,7 @@ export const metadata: Metadata = {
     title: "Dipen Magdani | Frontend Developer & Designer",
     description:
       "Crafting scalable, high-performance web applications and immersive digital experiences.",
-    images: ["/icon.png"],
+    images: ["/og-image.png"],
     creator: "@dipenmagdani",
   },
   robots: {
@@ -83,6 +89,25 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        {/* WebSite Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "Dipen Magdani Portfolio",
+              url: BASE_URL,
+              description:
+                "Portfolio of Dipen Magdani - Frontend Developer and UI/UX Designer",
+              author: {
+                "@type": "Person",
+                name: "Dipen Magdani",
+              },
+            }),
+          }}
+        />
+        {/* Person Schema */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -91,7 +116,8 @@ export default function RootLayout({
               "@type": "Person",
               name: "Dipen Magdani",
               alternateName: "Vajratheastra",
-              url: "https://www.dipen.live",
+              url: BASE_URL,
+              image: `${BASE_URL}/og-image.png`,
               jobTitle: "Frontend Developer & UI/UX Designer",
               description:
                 "Frontend Developer and UI/UX Designer crafting scalable web applications and immersive digital experiences.",
@@ -99,6 +125,7 @@ export default function RootLayout({
                 "https://www.behance.net/dipen_magdani",
                 "https://github.com/dipenmagdani",
                 "https://linkedin.com/in/dipenmagdani",
+                "https://twitter.com/dipenmagdani",
               ],
               knowsAbout: [
                 "React.js",
