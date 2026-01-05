@@ -1,13 +1,30 @@
 'use client';
 
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import Header from '@/components/header';
 import HeroSection from '@/components/sections/hero-section';
-import ProjectsSection from '@/components/sections/projects-section';
-import SkillsSection from '@/components/sections/skills-section';
-import AboutSection from '@/components/sections/about-section';
-import Footer from '@/components/footer';
 import { Role } from '@/lib/types';
+
+// Dynamic imports for below-fold sections to reduce initial bundle size
+// These components are loaded after the hero section is rendered
+const ProjectsSection = dynamic(() => import('@/components/sections/projects-section'), {
+  loading: () => <div className="min-h-screen bg-neutral-950" aria-label="Loading projects..." />,
+  ssr: true,
+});
+
+const SkillsSection = dynamic(() => import('@/components/sections/skills-section'), {
+  loading: () => <div className="min-h-[400px] bg-neutral-950" aria-label="Loading skills..." />,
+  ssr: true,
+});
+
+const AboutSection = dynamic(() => import('@/components/sections/about-section'), {
+  ssr: true,
+});
+
+const Footer = dynamic(() => import('@/components/footer'), {
+  ssr: true,
+});
 
 export default function Home() {
   const [activeRole, setActiveRole] = useState<Role>('developer');
@@ -23,3 +40,4 @@ export default function Home() {
     </main>
   );
 }
+

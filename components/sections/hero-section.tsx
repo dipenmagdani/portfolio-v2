@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, useMotionTemplate, useMotionValue, animate, AnimatePresence, Variants, useReducedMotion } from 'framer-motion';
+import { motion, useMotionTemplate, useMotionValue, AnimatePresence, Variants, useReducedMotion } from 'framer-motion';
 import { FiArrowDown } from 'react-icons/fi';
 import RoleToggle from '@/components/ui/role-toggle';
 import { Role } from '@/lib/types';
@@ -103,16 +103,29 @@ const glitchVariants: Variants = {
 export default function HeroSection({ activeRole, setActiveRole }: HeroSectionProps) {
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
+    const prefersReducedMotion = useReducedMotion();
 
     useEffect(() => {
+        // Skip mouse tracking if reduced motion is preferred
+        if (prefersReducedMotion) return;
+
+        // Throttle mouse move using requestAnimationFrame to prevent forced reflows
+        let ticking = false;
+
         const handleMouseMove = (e: MouseEvent) => {
-            animate(mouseX, e.clientX, { duration: 0, type: "tween" });
-            animate(mouseY, e.clientY, { duration: 0, type: "tween" });
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    mouseX.set(e.clientX);
+                    mouseY.set(e.clientY);
+                    ticking = false;
+                });
+                ticking = true;
+            }
         };
 
-        window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("mousemove", handleMouseMove, { passive: true });
         return () => window.removeEventListener("mousemove", handleMouseMove);
-    }, [mouseX, mouseY]);
+    }, [mouseX, mouseY, prefersReducedMotion]);
 
     const spotlightBackground = useMotionTemplate`
     radial-gradient(
@@ -136,15 +149,26 @@ export default function HeroSection({ activeRole, setActiveRole }: HeroSectionPr
             {/* Background Layers */}
             <HeroBackground activeRole={activeRole} />
 
-            {/* Spotlight Effect Background */}
+            {/* Spotlight Effect Background - GPU accelerated */}
             <motion.div
                 className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100 z-0"
-                style={{ background: spotlightBackground }}
+                style={{
+                    background: spotlightBackground,
+                    willChange: 'background',
+                    contain: 'layout style paint',
+                    transform: 'translateZ(0)',
+                }}
             />
 
-            {/* Static Ambient Glow */}
-            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] blur-[150px] rounded-full pointer-events-none opacity-20 z-0 transition-colors duration-1000 ${activeRole === 'developer' ? 'bg-cyan-900/40' : 'bg-fuchsia-900/40'
-                }`} />
+            {/* Static Ambient Glow - GPU accelerated */}
+            <div
+                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] blur-[150px] rounded-full pointer-events-none opacity-20 z-0 transition-colors duration-1000 ${activeRole === 'developer' ? 'bg-cyan-900/40' : 'bg-fuchsia-900/40'}`}
+                style={{
+                    willChange: 'background-color',
+                    contain: 'layout style paint',
+                    transform: 'translateZ(0)',
+                }}
+            />
 
             {/* Main Content */}
             <div className="w-full max-w-[95vw] 2xl:max-w-full text-center space-y-12 md:space-y-16 z-10 relative">

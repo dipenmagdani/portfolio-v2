@@ -1,6 +1,5 @@
 import { MetadataRoute } from 'next';
-
-const BASE_URL = 'https://dipenmagdani.live';
+import { BASE_URL } from '@/lib/constants';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
@@ -12,23 +11,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 1,
     },
-    {
-      url: `${BASE_URL}/#projects`,
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
-      url: `${BASE_URL}/#skills`,
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/#about`,
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
+    // Note: Hash-based URLs (#projects, #skills, etc.) are not valid sitemap entries
+    // as search engines treat them as the same page. Add actual routes here when available.
   ];
 }
+

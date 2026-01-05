@@ -1,20 +1,29 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
+import { BASE_URL, CLOUDINARY_URL } from "@/lib/constants";
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
+  preload: true,
 });
 
 const manrope = Manrope({
   variable: "--font-manrope",
   subsets: ["latin"],
   display: "swap",
+  preload: true,
 });
 
-const BASE_URL = 'https://dipenmagdani.live';
+// Viewport configuration for theme
+export const viewport: Viewport = {
+  themeColor: '#050505',
+  colorScheme: 'dark',
+  width: 'device-width',
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -89,6 +98,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        {/* Preconnect to critical third-party origins */}
+        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+
         {/* WebSite Schema */}
         <script
           type="application/ld+json"

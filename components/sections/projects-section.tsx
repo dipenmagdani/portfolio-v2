@@ -136,7 +136,7 @@ export default function ProjectsSection({ activeRole }: ProjectsSectionProps) {
                                                 </p>
                                                 <div className="flex flex-wrap gap-1 md:gap-2 mt-auto">
                                                     {project.tags.slice(0, 3).map(tag => (
-                                                        <span key={tag} className="text-[8px] md:text-[10px] uppercase tracking-wider font-medium text-cyan-700 border border-cyan-900/30 px-1.5 py-0.5 md:px-2.5 md:py-1 rounded-full bg-cyan-950/20">
+                                                        <span key={tag} className="text-[8px] md:text-[10px] uppercase tracking-wider font-medium text-cyan-400 border border-cyan-800/50 px-1.5 py-0.5 md:px-2.5 md:py-1 rounded-full bg-cyan-950/40">
                                                             {tag}
                                                         </span>
                                                     ))}
