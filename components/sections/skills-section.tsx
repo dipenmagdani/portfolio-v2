@@ -44,7 +44,7 @@ const getSkillIcon = (name: string, activeRole: Role) => {
 
 export default function SkillsSection({ activeRole }: SkillsSectionProps) {
     return (
-        <section id="skills" className="py-32 px-6 bg-neutral-950 border-t border-neutral-900">
+        <section id="skills" className="py-24 md:py-32 px-6 md:px-8 bg-neutral-950 border-t border-neutral-900">
             <div className="max-w-6xl mx-auto">
                 <motion.div
                     key={activeRole}

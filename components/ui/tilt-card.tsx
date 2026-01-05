@@ -1,9 +1,13 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { FiMaximize2 } from 'react-icons/fi';
 import Image from 'next/image';
 import { Project } from '@/lib/types';
+
+// Simple blur placeholder for images
+const shimmerBlur = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWExYTFhIi8+PC9zdmc+';
 
 interface TiltCardProps {
     project: Project;
@@ -11,6 +15,13 @@ interface TiltCardProps {
 }
 
 export default function TiltCard({ project, onOpen }: TiltCardProps) {
+    const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+    useEffect(() => {
+        // Detect touch device
+        setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    }, []);
+
     const x = useMotionValue(0);
     const y = useMotionValue(0);
 
@@ -21,6 +32,7 @@ export default function TiltCard({ project, onOpen }: TiltCardProps) {
     const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-7deg", "7deg"]);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (isTouchDevice) return; // Disable on touch devices
         const rect = e.currentTarget.getBoundingClientRect();
         const width = rect.width;
         const height = rect.height;
@@ -40,9 +52,9 @@ export default function TiltCard({ project, onOpen }: TiltCardProps) {
     return (
         <motion.div
             style={{
-                rotateX,
-                rotateY,
-                transformStyle: "preserve-3d",
+                rotateX: isTouchDevice ? 0 : rotateX,
+                rotateY: isTouchDevice ? 0 : rotateY,
+                transformStyle: isTouchDevice ? "flat" : "preserve-3d",
             }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
@@ -50,7 +62,7 @@ export default function TiltCard({ project, onOpen }: TiltCardProps) {
         >
             <div
                 onClick={() => onOpen(project)}
-                style={{ transform: "translateZ(30px)" }}
+                style={{ transform: isTouchDevice ? "none" : "translateZ(30px)" }}
                 className="absolute inset-0 overflow-hidden shadow-2xl bg-neutral-900 border border-white/10 group-hover:border-fuchsia-500/50 transition-colors duration-500 rounded-md"
             >
                 <div className="w-full h-full bg-black flex items-center justify-center relative">
@@ -60,6 +72,9 @@ export default function TiltCard({ project, onOpen }: TiltCardProps) {
                         fill
                         className="object-contain transition-transform duration-700 ease-out group-hover:scale-105"
                         sizes="(max-width: 768px) 280px, 340px"
+                        placeholder="blur"
+                        blurDataURL={shimmerBlur}
+                        quality={80}
                     />
 
                     {/* Preview Button Overlay */}
@@ -79,3 +94,4 @@ export default function TiltCard({ project, onOpen }: TiltCardProps) {
         </motion.div>
     );
 }
+

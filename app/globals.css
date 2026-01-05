@@ -179,3 +179,36 @@ body::after {
 .perspective-1000 {
   perspective: 1000px;
 }
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .glitch::before,
+  .glitch::after {
+    display: none;
+  }
+  
+  .animate-grid-flow,
+  .animate-blob,
+  .animate-spotlight,
+  .animate-bounce,
+  .animate-pulse {
+    animation: none !important;
+  }
+}
+
+/* Extra small breakpoint for very small screens */
+@media (max-width: 374px) {
+  html {
+    font-size: 14px;
+  }
+}
+

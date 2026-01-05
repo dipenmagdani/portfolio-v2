@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, useMotionTemplate, useMotionValue, animate, AnimatePresence, Variants } from 'framer-motion';
+import { motion, useMotionTemplate, useMotionValue, animate, AnimatePresence, Variants, useReducedMotion } from 'framer-motion';
 import { FiArrowDown } from 'react-icons/fi';
 import RoleToggle from '@/components/ui/role-toggle';
 import { Role } from '@/lib/types';
@@ -15,6 +15,7 @@ interface HeroSectionProps {
 function HeroBackground({ activeRole }: { activeRole: Role }) {
     const [dimensions, setDimensions] = useState({ width: 1000, height: 800 });
     const [mounted, setMounted] = useState(false);
+    const prefersReducedMotion = useReducedMotion();
 
     useEffect(() => {
         setDimensions({ width: window.innerWidth, height: window.innerHeight });
@@ -44,8 +45,8 @@ function HeroBackground({ activeRole }: { activeRole: Role }) {
                 <div className="w-full h-full animate-grid-flow"></div>
             </div>
 
-            {/* Floating Particles - Only render on client to avoid hydration mismatch */}
-            {mounted && [...Array(5)].map((_, i) => (
+            {/* Floating Particles - Reduced count, respects reduced motion */}
+            {mounted && !prefersReducedMotion && [...Array(3)].map((_, i) => (
                 <motion.div
                     key={i}
                     initial={{
@@ -58,7 +59,7 @@ function HeroBackground({ activeRole }: { activeRole: Role }) {
                         opacity: [0, 0.4, 0],
                     }}
                     transition={{
-                        duration: 10 + Math.random() * 10,
+                        duration: 12 + Math.random() * 8,
                         repeat: Infinity,
                         delay: Math.random() * 5
                     }}
@@ -186,7 +187,7 @@ export default function HeroSection({ activeRole, setActiveRole }: HeroSectionPr
                                         className="absolute inset-0 bg-cyan-500 blur-3xl z-0 pointer-events-none mix-blend-overlay opacity-30"
                                     />
 
-                                    <h1 className="text-5xl sm:text-7xl md:text-6xl lg:text-[7rem] xl:text-[7rem] 2xl:text-[9rem] font-heading font-extrabold tracking-tighter relative z-10 select-none leading-[1em] text-center drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                                    <h1 className="text-[2.5rem] xs:text-5xl sm:text-7xl md:text-6xl lg:text-[7rem] xl:text-[7rem] 2xl:text-[9rem] font-heading font-extrabold tracking-tighter relative z-10 select-none leading-[1em] text-center drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">
                                         <span className="block glitch text-white" data-text="DIPEN">DIPEN</span>
                                         <span className="block glitch text-neutral-600 transition-colors duration-700 group-hover:text-cyan-700" data-text="MAGDANI">MAGDANI</span>
                                     </h1>
@@ -217,7 +218,7 @@ export default function HeroSection({ activeRole, setActiveRole }: HeroSectionPr
                                         className="absolute inset-0 bg-fuchsia-500 blur-3xl z-0 pointer-events-none mix-blend-overlay opacity-30"
                                     />
 
-                                    <h1 className="text-5xl sm:text-7xl md:text-6xl lg:text-[7rem] xl:text-[7rem] 2xl:text-[9rem] font-heading font-extrabold tracking-tighter relative z-10 select-none leading-[1em] text-center drop-shadow-[0_0_15px_rgba(232,121,249,0.3)]">
+                                    <h1 className="text-[2.5rem] xs:text-5xl sm:text-7xl md:text-6xl lg:text-[7rem] xl:text-[7rem] 2xl:text-[9rem] font-heading font-extrabold tracking-tighter relative z-10 select-none leading-[1em] text-center drop-shadow-[0_0_15px_rgba(232,121,249,0.3)]">
                                         <span className="block glitch text-white" data-text="VAJRA">VAJRA</span>
                                         <span className="block glitch text-neutral-400 transition-colors duration-700 group-hover:text-fuchsia-600" data-text="THE ASTRA">
                                             <span className="opacity-80">THE</span> ASTRA

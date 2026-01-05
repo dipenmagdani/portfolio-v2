@@ -11,6 +11,9 @@ import { Role, Project } from '@/lib/types';
 import TiltCard from '@/components/ui/tilt-card';
 import ImageModal from '@/components/ui/image-modal';
 
+// Simple blur placeholder for images
+const shimmerBlur = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWExYTFhIi8+PC9zdmc+';
+
 interface ProjectsSectionProps {
     activeRole: Role;
 }
@@ -92,7 +95,7 @@ export default function ProjectsSection({ activeRole }: ProjectsSectionProps) {
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
                                 transition={{ duration: 0.5 }}
-                                className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6"
+                                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
                             >
                                 {filteredProjects.map((project, index) => (
                                     <motion.div
@@ -100,32 +103,35 @@ export default function ProjectsSection({ activeRole }: ProjectsSectionProps) {
                                         initial={{ opacity: 0, y: 30 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: index * 0.1, duration: 0.5 }}
-                                        className="group relative flex flex-col rounded-xl overflow-hidden bg-neutral-900/40 border border-white/5 hover:border-cyan-500/30 transition-all duration-500 h-[320px] sm:h-[400px] md:h-[500px] hover:shadow-[0_0_30px_-5px_rgba(6,182,212,0.15)]"
+                                        className="group relative flex flex-col rounded-xl overflow-hidden bg-neutral-900/40 border border-white/5 hover:border-cyan-500/30 transition-all duration-500 h-[380px] sm:h-[400px] md:h-[500px] hover:shadow-[0_0_30px_-5px_rgba(6,182,212,0.15)]"
                                     >
                                         {/* Image Area */}
-                                        <div className="h-[140px] sm:h-[180px] md:h-[240px] shrink-0 overflow-hidden relative">
-                                            <div className="absolute inset-0 bg-neutral-800 animate-pulse z-0" />
+                                        <div className="h-[180px] sm:h-[180px] md:h-[240px] shrink-0 overflow-hidden relative">
                                             <Image
                                                 src={project.image}
                                                 alt={project.title}
                                                 fill
                                                 className="object-cover transition-transform duration-700 group-hover:scale-105 relative z-10 grayscale group-hover:grayscale-0"
-                                                sizes="(max-width: 768px) 50vw, 33vw"
+                                                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+                                                placeholder="blur"
+                                                blurDataURL={shimmerBlur}
+                                                quality={85}
+                                                priority={index < 3}
                                             />
                                             <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent opacity-90" />
                                         </div>
 
                                         {/* Content Area */}
-                                        <div className="flex-1 flex flex-col p-3 sm:p-4 md:p-6 relative -mt-5 sm:-mt-6 md:-mt-8 z-20">
+                                        <div className="flex-1 flex flex-col p-4 sm:p-4 md:p-6 relative -mt-5 sm:-mt-6 md:-mt-8 z-20">
                                             <div className="backdrop-blur-xl bg-neutral-950/90 absolute inset-0 border-t border-white/5 rounded-t-xl" />
                                             <div className="relative z-10 flex flex-col h-full">
-                                                <div className="flex justify-between items-start mb-1.5 md:mb-3">
-                                                    <h3 className="text-sm sm:text-lg md:text-xl font-bold text-white group-hover:text-cyan-200 transition-colors tracking-tight leading-tight line-clamp-1 md:line-clamp-none">{project.title}</h3>
+                                                <div className="flex justify-between items-start mb-2 md:mb-3">
+                                                    <h3 className="text-base sm:text-lg md:text-xl font-bold text-white group-hover:text-cyan-200 transition-colors tracking-tight leading-tight line-clamp-2 sm:line-clamp-1 md:line-clamp-none">{project.title}</h3>
                                                     <div className="p-1.5 md:p-2 shrink-0 rounded-full bg-white/5 text-neutral-400 group-hover:bg-cyan-500 group-hover:text-black transition-all duration-300 transform group-hover:-translate-y-1 group-hover:translate-x-1">
                                                         <FiArrowUpRight className="w-3 h-3 md:w-4 md:h-4" />
                                                     </div>
                                                 </div>
-                                                <p className="text-neutral-400 text-[10px] sm:text-xs md:text-sm leading-relaxed mb-3 md:mb-4 line-clamp-3 md:line-clamp-4">
+                                                <p className="text-neutral-400 text-xs sm:text-xs md:text-sm leading-relaxed mb-3 md:mb-4 line-clamp-3 sm:line-clamp-3 md:line-clamp-4">
                                                     {project.description}
                                                 </p>
                                                 <div className="flex flex-wrap gap-1 md:gap-2 mt-auto">
@@ -170,6 +176,9 @@ export default function ProjectsSection({ activeRole }: ProjectsSectionProps) {
                                                             fill
                                                             className="object-cover transition-transform duration-1000 group-hover:scale-105"
                                                             sizes="(max-width: 768px) 100vw, 50vw"
+                                                            placeholder="blur"
+                                                            blurDataURL={shimmerBlur}
+                                                            quality={85}
                                                         />
                                                         <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
                                                         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -195,7 +204,10 @@ export default function ProjectsSection({ activeRole }: ProjectsSectionProps) {
                                                             alt={project.title}
                                                             fill
                                                             className="object-cover transition-transform duration-1000 group-hover:scale-105 brightness-100"
-                                                            sizes=""
+                                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                                            placeholder="blur"
+                                                            blurDataURL={shimmerBlur}
+                                                            quality={85}
                                                         />
                                                         <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
                                                     </div>

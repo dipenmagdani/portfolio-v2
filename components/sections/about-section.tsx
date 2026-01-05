@@ -3,11 +3,11 @@ import { FaTrophy, FaGraduationCap, FaBriefcase } from 'react-icons/fa';
 
 export default function AboutSection() {
     return (
-        <section id="about" className="py-32 px-6 bg-neutral-950 relative overflow-hidden">
+        <section id="about" className="py-24 md:py-32 px-6 md:px-8 bg-neutral-950 relative overflow-hidden">
             {/* Background decoration */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-neutral-900/30 blur-[120px] rounded-full pointer-events-none" />
 
-            <div className="max-w-5xl mx-auto space-y-32 relative z-10">
+            <div className="max-w-5xl mx-auto space-y-24 md:space-y-32 relative z-10">
 
                 {/* Intro */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
