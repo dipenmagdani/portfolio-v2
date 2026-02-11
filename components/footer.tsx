@@ -29,13 +29,6 @@ export default function Footer() {
                             </div>
                             <span className="text-lg md:text-2xl font-light tracking-tight group-hover:translate-x-2 transition-transform duration-300 break-all">dipenmagdani@gmail.com</span>
                         </a>
-                        <a href="tel:+919328534620" className="group flex items-center gap-6 text-neutral-300 hover:text-white transition-colors">
-                            <div className="p-3 md:p-4 rounded-full bg-neutral-900 group-hover:bg-white group-hover:text-black transition-colors border border-neutral-800 group-hover:scale-110 duration-300">
-                                <FiPhone className="w-5 h-5 md:w-6 md:h-6" />
-                            </div>
-                            <span className="text-lg md:text-2xl font-light tracking-tight group-hover:translate-x-2 transition-transform duration-300">+91 9328534620</span>
-                        </a>
-                    </div>
                 </div>
 
                 <div className="flex gap-4 md:gap-6">
@@ -50,7 +43,7 @@ export default function Footer() {
 
             <div className="max-w-6xl mx-auto mt-20 md:mt-32 pt-8 border-t border-neutral-900 text-center md:text-left text-neutral-600 text-xs md:text-sm flex flex-col md:flex-row justify-between items-center font-mono uppercase tracking-widest relative z-10 gap-4">
                 <span>© {currentYear} Dipen Magdani</span>
-                <span className="hidden md:inline">Next.js 15 & Tailwind</span>
+                <span className="hidden md:inline">Built with Next.js 15 & Tailwind</span>
             </div>
         </footer>
     );
