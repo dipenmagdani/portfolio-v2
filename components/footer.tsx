@@ -1,74 +1,77 @@
-import { FiMail, FiPhone } from "react-icons/fi";
-import { FaLinkedinIn, FaGithub } from "react-icons/fa";
+"use client";
+
+import { useIdentity } from "@/components/identity-provider";
+import { motion } from "framer-motion";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { activeRole } = useIdentity();
+  const isDev = activeRole === "developer";
 
   return (
     <footer
       id="contact"
-      className="py-24 md:py-32 px-6 bg-black text-white border-t border-neutral-900 relative overflow-hidden"
+      className="py-32 px-6 flex flex-col items-center justify-center text-center relative max-w-4xl mx-auto border-t border-neutral-900 mt-24"
     >
-      {/* Footer atmospheric glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[300px] bg-gradient-to-t from-neutral-900/50 to-transparent pointer-events-none" />
-      <div className="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-cyan-900/10 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute -bottom-40 -right-40 w-[600px] h-[600px] bg-fuchsia-900/10 blur-[120px] rounded-full pointer-events-none" />
-
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-16 md:gap-20 relative z-10">
-        <div className="space-y-8 md:space-y-12">
-          <h2 className="text-4xl md:text-6xl lg:text-8xl font-heading font-bold tracking-tighter leading-none">
-            Let&apos;s create
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-neutral-400 to-neutral-600">
-              something iconic.
-            </span>
-          </h2>
-          <p className="text-neutral-400 max-w-sm text-base md:text-lg font-light">
-            Open for freelance projects and full-time opportunities.
-          </p>
-
-          <div className="flex flex-col gap-6 pt-4">
-            <a
-              href="mailto:dipenmagdani@gmail.com"
-              className="group flex items-center gap-6 text-neutral-300 hover:text-white transition-colors"
-            >
-              <div className="p-3 md:p-4 rounded-full bg-neutral-900 group-hover:bg-white group-hover:text-black transition-colors border border-neutral-800 group-hover:scale-110 duration-300">
-                <FiMail className="w-5 h-5 md:w-6 md:h-6" />
-              </div>
-              <span className="text-lg md:text-2xl font-light tracking-tight group-hover:translate-x-2 transition-transform duration-300 break-all">
-                dipenmagdani@gmail.com
-              </span>
-            </a>
-          </div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.6 }}
+        className="space-y-8"
+      >
+        <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full border border-neutral-800 bg-neutral-900/50">
+          <span className="w-2 h-2 rounded-full bg-accent element-pulse" />
+          <span className="text-xs font-mono text-neutral-400 font-medium uppercase tracking-wider">
+            Available for {isDev ? "Engineering" : "Design"} Roles
+          </span>
         </div>
 
-        <div className="flex gap-4 md:gap-6">
+        <h2 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold tracking-tight text-foreground leading-[1.1]">
+          Let&apos;s build something <br />
+          <span className="text-neutral-500">meaningful.</span>
+        </h2>
+
+        <div className="pt-8">
           <a
-            href="https://linkedin.com/in/dipenmagdani"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-4 md:p-6 bg-neutral-900 rounded-full hover:bg-cyan-600 hover:text-white hover:border-cyan-600 transition-all duration-300 transform hover:-translate-y-2 border border-neutral-800"
-            aria-label="LinkedIn"
+            href="mailto:dipenmagdani@gmail.com"
+            className="text-lg md:text-2xl font-mono text-foreground hover:text-accent transition-colors relative group inline-block"
           >
-            <FaLinkedinIn className="w-6 h-6 md:w-8 md:h-8" />
+            dipenmagdani@gmail.com
+            <span className="absolute -bottom-1 left-0 w-full h-px bg-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
           </a>
+        </div>
+      </motion.div>
+
+      <div className="mt-32 w-full flex flex-col sm:flex-row justify-between items-center text-xs font-mono text-neutral-600 uppercase tracking-widest px-4">
+        <span>&copy; {currentYear} Dipen Magdani</span>
+
+        <div className="flex gap-6 mt-6 sm:mt-0">
           <a
             href="https://github.com/dipenmagdani"
             target="_blank"
-            rel="noopener noreferrer"
-            className="p-4 md:p-6 bg-neutral-900 rounded-full hover:bg-white hover:text-black transition-all duration-300 transform hover:-translate-y-2 border border-neutral-800"
-            aria-label="GitHub"
+            rel="noreferrer"
+            className="hover:text-foreground transition-colors"
           >
-            <FaGithub className="w-6 h-6 md:w-8 md:h-8" />
+            GitHub
+          </a>
+          <a
+            href="https://linkedin.com/in/dipenmagdani"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-foreground transition-colors"
+          >
+            LinkedIn
+          </a>
+          <a
+            href="https://www.behance.net/dipen_magdani"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-foreground transition-colors"
+          >
+            Behance
           </a>
         </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto mt-20 md:mt-32 pt-8 border-t border-neutral-900 text-center md:text-left text-neutral-600 text-xs md:text-sm flex flex-col md:flex-row justify-between items-center font-mono uppercase tracking-widest relative z-10 gap-4">
-        <span>© {currentYear} Dipen Magdani</span>
-        <span className="hidden md:inline">
-          Built with Next.js 15 & Tailwind
-        </span>
       </div>
     </footer>
   );

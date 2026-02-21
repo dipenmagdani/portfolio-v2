@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Manrope } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { BASE_URL, CLOUDINARY_URL } from "@/lib/constants";
+import { IdentityProvider } from "@/components/identity-provider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -10,8 +11,15 @@ const inter = Inter({
   preload: true,
 });
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta-sans",
+  subsets: ["latin"],
+  display: "swap",
+  preload: true,
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
   display: "swap",
   preload: true,
@@ -19,9 +27,9 @@ const manrope = Manrope({
 
 // Viewport configuration for theme
 export const viewport: Viewport = {
-  themeColor: '#050505',
-  colorScheme: 'dark',
-  width: 'device-width',
+  themeColor: "#111111",
+  colorScheme: "dark",
+  width: "device-width",
   initialScale: 1,
 };
 
@@ -99,7 +107,11 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <head>
         {/* Preconnect to critical third-party origins */}
-        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://res.cloudinary.com"
+          crossOrigin="anonymous"
+        />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
 
         {/* WebSite Schema */}
@@ -154,9 +166,9 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${manrope.variable} font-sans antialiased bg-neutral-950 text-neutral-50 selection:bg-white selection:text-black overflow-x-hidden`}
+        className={`${inter.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable} font-sans antialiased bg-background text-foreground selection:bg-accent selection:text-background overflow-x-hidden`}
       >
-        {children}
+        <IdentityProvider>{children}</IdentityProvider>
       </body>
     </html>
   );

@@ -2,33 +2,21 @@
 
 /* Custom CSS Variables */
 :root {
-  --background: #050505;
-  --foreground: #fafafa;
-  --neutral-950: #050505;
-  --neutral-900: #171717;
-  --neutral-800: #262626;
-  --neutral-700: #404040;
-  --neutral-600: #525252;
-  --neutral-500: #737373;
-  --neutral-400: #a3a3a3;
-  --neutral-300: #d4d4d4;
-  --neutral-200: #e5e5e5;
-  --neutral-100: #f5f5f5;
-  --neutral-50: #fafafa;
-  --cyan-500: #06b6d4;
-  --cyan-600: #0891b2;
-  --cyan-700: #0e7490;
-  --cyan-900: #164e63;
-  --fuchsia-500: #d946ef;
-  --fuchsia-600: #c026d3;
-  --fuchsia-900: #701a75;
+  --background: #111111;
+  --foreground: #f5f5f5;
+  --neutral-gray: #dadada;
+  --accent: #4f8cff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-neutral-gray: var(--neutral-gray);
+  --color-accent: var(--accent);
+
   --font-sans: var(--font-inter);
-  --font-heading: var(--font-manrope);
+  --font-heading: var(--font-plus-jakarta-sans);
+  --font-mono: var(--font-jetbrains-mono);
 }
 
 /* Smooth Scrolling */
@@ -43,223 +31,25 @@ body {
   color: var(--foreground);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  position: relative;
-}
-
-/* Noise Texture Overlay */
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 50;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
 /* Text Selection */
 ::selection {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: var(--accent);
+  color: #111111;
 }
 
 /* Hide Scrollbar */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
-
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
-/* Glitch Effect - Runs ONCE on mount */
-.glitch {
-  position: relative;
-}
-
-.glitch::before,
-.glitch::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
-
-.glitch::before {
-  left: 2px;
-  text-shadow: 2px 0 #ff00c1;
-  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
-  animation: glitch-anim-1 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  color: #fff;
-  mix-blend-mode: hard-light;
-  z-index: -1;
-}
-
-.glitch::after {
-  left: -2px;
-  text-shadow: -2px 0 #00fff9;
-  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
-  animation: glitch-anim-2 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  animation-delay: 0.05s;
-  color: #fff;
-  mix-blend-mode: hard-light;
-  z-index: -2;
-}
-
-/* Glitch Animation Keyframes */
-@keyframes glitch-anim-1 {
-  0% {
-    opacity: 1;
-    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-    transform: translate(-10px);
-  }
-
-  20% {
-    clip-path: polygon(0 15%, 100% 15%, 100% 25%, 0 25%);
-    transform: translate(10px);
-  }
-
-  40% {
-    clip-path: polygon(0 50%, 100% 50%, 100% 80%, 0 80%);
-    transform: translate(-10px);
-  }
-
-  60% {
-    clip-path: polygon(0 30%, 100% 30%, 100% 40%, 0 40%);
-    transform: translate(10px);
-  }
-
-  80% {
-    clip-path: polygon(0 70%, 100% 70%, 100% 90%, 0 90%);
-    transform: translate(-5px);
-  }
-
-  100% {
-    opacity: 0;
-    clip-path: polygon(0 0, 0 0, 0 0, 0 0);
-    transform: translate(0);
-  }
-}
-
-@keyframes glitch-anim-2 {
-  0% {
-    opacity: 1;
-    clip-path: polygon(0 60%, 100% 60%, 100% 70%, 0 70%);
-    transform: translate(0);
-  }
-
-  20% {
-    clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%);
-    transform: translate(10px, 5px);
-  }
-
-  40% {
-    clip-path: polygon(0 50%, 100% 50%, 100% 90%, 0 90%);
-    transform: translate(-10px, -5px);
-  }
-
-  60% {
-    clip-path: polygon(0 30%, 100% 30%, 100% 40%, 0 40%);
-    transform: translate(5px, 2px);
-  }
-
-  80% {
-    clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%);
-    transform: translate(-5px, -2px);
-  }
-
-  100% {
-    opacity: 0;
-    clip-path: polygon(0 0, 0 0, 0 0, 0 0);
-    transform: translate(0);
-  }
-}
-
-/* Grid Flow Animation */
-@keyframes grid-flow {
-  0% {
-    transform: translateY(0);
-  }
-
-  100% {
-    transform: translateY(40px);
-  }
-}
-
-.animate-grid-flow {
-  animation: grid-flow 20s linear infinite;
-}
-
-/* Spotlight Animation */
-@keyframes spotlight {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -150%) scale(0.5);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
-.animate-spotlight {
-  animation: spotlight 2s ease 0.75s 1 forwards;
-}
-
-/* Blob Animation */
-@keyframes blob {
-  0% {
-    transform: translate(0px, 0px) scale(1);
-  }
-
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-
-  100% {
-    transform: translate(0px, 0px) scale(1);
-  }
-}
-
-.animate-blob {
-  animation: blob 7s infinite;
-}
-
-/* Line Clamp Utilities */
-.line-clamp-1 {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* Perspective for 3D Effects */
-.perspective-1000 {
-  perspective: 1000px;
-}
-
 /* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
-
   *,
   *::before,
   *::after {
@@ -268,75 +58,42 @@ body::after {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-
-  .glitch::before,
-  .glitch::after {
-    display: none;
-  }
-
-  .animate-grid-flow,
-  .animate-blob,
-  .animate-spotlight,
-  .animate-bounce,
-  .animate-pulse {
-    animation: none !important;
-  }
 }
 
-/* Mobile Animation Optimizations */
-@media (max-width: 768px) {
-  .animate-grid-flow {
-    animation-duration: 40s;
+/* Animations */
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
   }
-
-  .animate-blob {
-    animation: none;
+  25% {
+    opacity: 1;
   }
-
-  /* Reduce blur intensity on mobile for better performance */
-  .blur-\[150px\] {
-    filter: blur(80px);
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
   }
 }
 
-/* Extra small breakpoint for very small screens */
-@media (max-width: 374px) {
-  html {
-    font-size: 14px;
+@keyframes pulse-dot {
+  0% {
+    box-shadow: 0 0 0 0 rgba(100, 100, 100, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(100, 100, 100, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(100, 100, 100, 0);
   }
 }
 
-/* GPU Acceleration Utilities */
-.gpu-accelerated {
-  transform: translateZ(0);
-  will-change: transform;
-  backface-visibility: hidden;
+.animate-scanline {
+  animation: scanline 2s linear infinite;
 }
 
-/* CSS Containment for Performance */
-.contain-layout {
-  contain: layout;
-}
-
-.contain-paint {
-  contain: paint;
-}
-
-.contain-strict {
-  contain: strict;
-}
-
-/* Carousel smooth scroll animation */
-@keyframes carousel-scroll {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-carousel {
-  animation: carousel-scroll 60s linear infinite;
+.element-pulse {
+  animation: pulse-dot 2s infinite;
 }

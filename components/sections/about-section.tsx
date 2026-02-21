@@ -1,102 +1,146 @@
-import { EXPERIENCE, EDUCATION, AWARDS } from '@/lib/constants';
-import { FaTrophy, FaGraduationCap, FaBriefcase } from 'react-icons/fa';
+"use client";
+
+import { EXPERIENCE, EDUCATION, AWARDS } from "@/lib/constants";
+import { motion } from "framer-motion";
+import { User, Activity, ShieldCheck } from "lucide-react";
 
 export default function AboutSection() {
-    return (
-        <section id="about" className="py-24 md:py-32 px-6 md:px-8 bg-neutral-950 relative overflow-hidden">
-            {/* Background decoration */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-neutral-900/30 blur-[120px] rounded-full pointer-events-none" />
+  return (
+    <section
+      id="about"
+      className="py-24 md:py-32 px-6 md:px-8 max-w-7xl mx-auto relative z-10 border-t border-neutral-900/50"
+    >
+      {/* About Intro */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        className="mb-24 md:mb-32 grid grid-cols-1 md:grid-cols-2 gap-12"
+      >
+        <div>
+          <div className="flex items-center gap-2 mb-4 font-mono text-sm uppercase tracking-wider text-neutral-500">
+            <User size={16} />
+            <span>System Operator Profile</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-4 text-foreground">
+            The Architect.
+          </h2>
+        </div>
 
-            <div className="max-w-5xl mx-auto space-y-24 md:space-y-32 relative z-10">
+        <div className="flex items-end">
+          <p className="text-xl text-neutral-400 leading-relaxed font-light border-l-2 border-accent/30 pl-6">
+            I am a frontend professional with a deep appreciation for systems
+            thinking, performance mindsets, and clean architecture. Integrating
+            engineering rigor with design sensibilities ensures that every
+            interface built is not just functional, but exceptional. <br />
+            <br />
+            <span className="font-mono text-sm text-accent uppercase tracking-widest">
+              Restraint and precision are the highest forms of technical
+              confidence.
+            </span>
+          </p>
+        </div>
+      </motion.div>
 
-                {/* Intro */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
-                    <div>
-                        <h2 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6 tracking-tighter leading-tight">
-                            Beyond the<br />code.
-                        </h2>
-                    </div>
-                    <div>
-                        <p className="text-xl text-neutral-400 leading-relaxed font-light">
-                            I am a Front-End Developer leveraging expertise in React, Next.js, and modern CSS to build beautiful, responsive web applications.
-                            My work bridges the gap between engineering and design, ensuring every pixel serves a purpose.
-                        </p>
-                    </div>
-                </div>
+      {/* Experience */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        className="mb-24 border border-neutral-800 bg-neutral-900/20 backdrop-blur rounded p-6 md:p-12"
+      >
+        <div className="flex items-center gap-2 mb-12 font-mono text-sm uppercase tracking-wider text-accent border-b border-white/5 pb-4">
+          <Activity size={16} />
+          <span>Operational History</span>
+        </div>
 
-                {/* Timeline Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
+        <div className="flex flex-col gap-12">
+          {EXPERIENCE.map((exp, idx) => (
+            <div
+              key={idx}
+              className="flex flex-col md:flex-row gap-6 md:gap-12 relative group"
+            >
+              {/* Vertical connecting line */}
+              {idx !== EXPERIENCE.length - 1 && (
+                <div className="hidden md:block absolute left-16 top-10 bottom-[-3rem] w-[1px] bg-neutral-800 group-hover:bg-accent/30 transition-colors" />
+              )}
 
-                    {/* Experience */}
-                    <div>
-                        <div className="flex items-center gap-4 mb-12">
-                            <div className="p-3 rounded-full bg-neutral-900 text-white border border-neutral-800">
-                                <FaBriefcase className="w-5 h-5" />
-                            </div>
-                            <h3 className="text-2xl font-bold text-white tracking-tight">Experience</h3>
-                        </div>
-                        <div className="space-y-16 border-l border-neutral-800 pl-8 ml-4">
-                            {EXPERIENCE.map((exp) => (
-                                <div key={exp.id} className="relative group">
-                                    <span className="absolute -left-[39px] top-2 w-5 h-5 bg-neutral-950 rounded-full border-2 border-neutral-700 group-hover:border-white transition-colors duration-300" />
-                                    <h4 className="text-2xl text-white font-semibold mb-2 tracking-tight">{exp.role}</h4>
-                                    {exp.company && <p className="text-neutral-400 text-sm mb-1">{exp.company}</p>}
-                                    <p className="text-sm text-neutral-500 mb-6 font-mono tracking-wide uppercase">{exp.period}</p>
-                                    <ul className="text-neutral-400 space-y-3 text-base leading-relaxed font-light">
-                                        {exp.description.map((desc, i) => (
-                                            <li key={i}>• {desc}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+              <div className="w-full md:w-32 shrink-0 font-mono text-xs text-neutral-500 pt-1">
+                {exp.period}
+              </div>
 
-                    {/* Education & Awards */}
-                    <div className="space-y-20">
-
-                        {/* Education */}
-                        <div>
-                            <div className="flex items-center gap-4 mb-12">
-                                <div className="p-3 rounded-full bg-neutral-900 text-white border border-neutral-800">
-                                    <FaGraduationCap className="w-5 h-5" />
-                                </div>
-                                <h3 className="text-2xl font-bold text-white tracking-tight">Education</h3>
-                            </div>
-                            <div className="bg-neutral-900/30 border border-neutral-800 p-8 rounded-sm hover:border-neutral-600 transition-colors duration-500">
-                                <h4 className="text-white font-semibold mb-2 text-xl tracking-tight">{EDUCATION.degree}</h4>
-                                <p className="text-neutral-400 mb-6 font-light">{EDUCATION.institution}</p>
-                                <div className="inline-block bg-white/5 text-neutral-300 text-xs px-4 py-1.5 rounded-full font-mono uppercase tracking-wider">
-                                    {EDUCATION.details}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Awards */}
-                        <div>
-                            <div className="flex items-center gap-4 mb-12">
-                                <div className="p-3 rounded-full bg-neutral-900 text-white border border-neutral-800">
-                                    <FaTrophy className="w-5 h-5" />
-                                </div>
-                                <h3 className="text-2xl font-bold text-white tracking-tight">Recognition</h3>
-                            </div>
-                            <div className="space-y-4">
-                                {AWARDS.map((award, idx) => (
-                                    <div key={idx} className="flex justify-between items-center bg-neutral-900/30 p-5 rounded-sm border border-white/5 hover:border-white/20 transition-all">
-                                        <div>
-                                            <h4 className="text-white text-base font-medium tracking-tight">{award.title}</h4>
-                                            <p className="text-neutral-500 text-sm mt-1">{award.event}</p>
-                                        </div>
-                                        <span className="text-neutral-600 text-xs font-mono">{award.year}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
+              <div className="flex-1">
+                <h4 className="text-2xl font-heading font-semibold text-foreground mb-1 group-hover:text-accent transition-colors">
+                  {exp.role}
+                </h4>
+                {exp.company && (
+                  <p className="text-neutral-400 text-sm font-mono mb-6 uppercase tracking-wider">
+                    {exp.company}
+                  </p>
+                )}
+                <ul className="space-y-3 text-neutral-400 font-light text-base">
+                  {exp.description.map((desc, i) => (
+                    <li key={i} className="flex gap-4">
+                      <span className="text-accent/50 mt-1">▹</span>
+                      <span>{desc}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-        </section>
-    );
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Education & Awards */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+      >
+        <div className="border border-neutral-800 bg-neutral-900/20 p-8 rounded hover:border-neutral-700 transition-colors">
+          <div className="flex items-center gap-2 mb-8 font-mono text-sm uppercase tracking-wider text-neutral-500 border-b border-white/5 pb-4">
+            <ShieldCheck size={16} />
+            <span>Academic Base</span>
+          </div>
+          <div>
+            <h4 className="text-xl font-heading font-semibold text-foreground mb-2">
+              {EDUCATION.degree}
+            </h4>
+            <p className="text-neutral-400 mb-4 font-light">
+              {EDUCATION.institution}
+            </p>
+            <span className="inline-block px-3 py-1 font-mono text-xs text-accent bg-accent/10 border border-accent/20 rounded uppercase tracking-widest">
+              {EDUCATION.details}
+            </span>
+          </div>
+        </div>
+
+        <div className="border border-neutral-800 bg-neutral-900/20 p-8 rounded hover:border-neutral-700 transition-colors">
+          <div className="flex items-center gap-2 mb-8 font-mono text-sm uppercase tracking-wider text-neutral-500 border-b border-white/5 pb-4">
+            <ShieldCheck size={16} />
+            <span>Verifications</span>
+          </div>
+          <div className="space-y-6">
+            {AWARDS.map((award, idx) => (
+              <div key={idx} className="flex justify-between items-start group">
+                <div>
+                  <h4 className="text-lg font-heading font-semibold text-foreground mb-1 group-hover:text-accent transition-colors">
+                    {award.title}
+                  </h4>
+                  <p className="text-neutral-500 font-light text-sm">
+                    {award.event}
+                  </p>
+                </div>
+                <span className="font-mono text-xs text-neutral-600 bg-neutral-900 px-2 py-1 rounded">
+                  {award.year}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+    </section>
+  );
 }

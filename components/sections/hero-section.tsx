@@ -1,308 +1,163 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { motion, useMotionTemplate, useMotionValue, AnimatePresence, Variants, useReducedMotion } from 'framer-motion';
-import { FiArrowDown } from 'react-icons/fi';
-import RoleToggle from '@/components/ui/role-toggle';
-import { Role } from '@/lib/types';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useIdentity } from "@/components/identity-provider";
+import { ArrowDown } from "lucide-react";
 
-interface HeroSectionProps {
-    activeRole: Role;
-    setActiveRole: (role: Role) => void;
-}
+export default function HeroSection() {
+  const { activeRole } = useIdentity();
+  const isDev = activeRole === "developer";
+  const [bootPhase, setBootPhase] = useState(0);
 
-// Background Component
-function HeroBackground({ activeRole }: { activeRole: Role }) {
-    const [dimensions, setDimensions] = useState({ width: 1000, height: 800 });
-    const [mounted, setMounted] = useState(false);
-    const prefersReducedMotion = useReducedMotion();
+  useEffect(() => {
+    // Boot sequence orchestration
+    const timer1 = setTimeout(() => setBootPhase(1), 1200);
+    const timer2 = setTimeout(() => setBootPhase(2), 2500);
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
+  }, []);
 
-    useEffect(() => {
-        setDimensions({ width: window.innerWidth, height: window.innerHeight });
-        setMounted(true);
-    }, []);
-
-    return (
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none transition-colors duration-1000">
-            {/* Dynamic Gradient Background */}
-            <div
-                className={`absolute inset-0 opacity-20 transition-all duration-1000 ${activeRole === 'developer'
-                    ? 'bg-[radial-gradient(circle_at_50%_0%,#00aaff_0%,#050505_70%)]'
-                    : 'bg-[radial-gradient(circle_at_50%_0%,#d946ef_0%,#050505_70%)]'
-                    }`}
-            />
-
-            {/* Perspective Grid */}
-            <div
-                className="absolute top-[-50%] left-[-50%] right-[-50%] bottom-[-50%] opacity-[0.1]"
-                style={{
-                    backgroundImage: `linear-gradient(to right, ${activeRole === 'developer' ? '#38bdf8' : '#e879f9'} 1px, transparent 1px), linear-gradient(to bottom, ${activeRole === 'developer' ? '#38bdf8' : '#e879f9'} 1px, transparent 1px)`,
-                    backgroundSize: '40px 40px',
-                    transform: 'perspective(1000px) rotateX(60deg)',
-                    maskImage: 'radial-gradient(circle at 50% 50%, black 10%, transparent 60%)'
-                }}
-            >
-                <div className="w-full h-full animate-grid-flow"></div>
-            </div>
-
-            {/* Floating Particles - Reduced count, respects reduced motion */}
-            {mounted && !prefersReducedMotion && [...Array(3)].map((_, i) => (
-                <motion.div
-                    key={i}
-                    initial={{
-                        x: Math.random() * dimensions.width,
-                        y: Math.random() * dimensions.height,
-                        opacity: 0
-                    }}
-                    animate={{
-                        y: [null, Math.random() * -100],
-                        opacity: [0, 0.4, 0],
-                    }}
-                    transition={{
-                        duration: 12 + Math.random() * 8,
-                        repeat: Infinity,
-                        delay: Math.random() * 5
-                    }}
-                    className={`absolute w-1 h-1 rounded-full blur-[1px] ${activeRole === 'developer' ? 'bg-cyan-400' : 'bg-fuchsia-400'}`}
-                />
-            ))}
-        </div>
-    );
-}
-
-// Glitch Animation Variants
-const glitchVariants: Variants = {
-    hidden: {
-        opacity: 0,
-        scale: 1.05,
-        skewX: -10,
-        filter: 'blur(10px) contrast(1.5)',
-        x: -10,
-    },
-    visible: {
-        opacity: 1,
-        scale: 1,
-        skewX: 0,
-        filter: 'blur(0px) contrast(1)',
-        x: 0,
-        transition: {
-            duration: 0.5,
-            ease: [0.33, 1, 0.68, 1],
-        }
-    },
-    exit: {
-        opacity: 0,
-        scale: 0.95,
-        skewX: 10,
-        filter: 'blur(10px) contrast(1.5)',
-        x: 10,
-        transition: { duration: 0.2 }
+  const scrollToWork = () => {
+    const element = document.getElementById("work");
+    if (element) {
+      window.scrollTo({ top: element.offsetTop - 80, behavior: "smooth" });
     }
-};
+  };
 
-export default function HeroSection({ activeRole, setActiveRole }: HeroSectionProps) {
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-    const prefersReducedMotion = useReducedMotion();
+  return (
+    <section
+      id="home"
+      className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden bg-background"
+    >
+      {/* Background Architecture Grid */}
+      <div
+        className="absolute inset-0 z-0 opacity-[0.03] md:opacity-[0.05] pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(to right, ${isDev ? "#38bdf8" : "#e879f9"} 1px, transparent 1px), linear-gradient(to bottom, ${isDev ? "#38bdf8" : "#e879f9"} 1px, transparent 1px)`,
+          backgroundSize: "40px 40px",
+          maskImage:
+            "radial-gradient(circle at center, black 10%, transparent 80%)",
+        }}
+      />
 
-    useEffect(() => {
-        // Skip mouse tracking if reduced motion is preferred
-        if (prefersReducedMotion) return;
-
-        // Throttle mouse move using requestAnimationFrame to prevent forced reflows
-        let ticking = false;
-
-        const handleMouseMove = (e: MouseEvent) => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    mouseX.set(e.clientX);
-                    mouseY.set(e.clientY);
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        };
-
-        window.addEventListener("mousemove", handleMouseMove, { passive: true });
-        return () => window.removeEventListener("mousemove", handleMouseMove);
-    }, [mouseX, mouseY, prefersReducedMotion]);
-
-    const spotlightBackground = useMotionTemplate`
-    radial-gradient(
-      650px circle at ${mouseX}px ${mouseY}px,
-      rgba(255,255,255,0.03),
-      transparent 80%
-    )
-  `;
-
-    const innerSpotlight = useMotionTemplate`
-    radial-gradient(
-      300px circle at ${mouseX}px ${mouseY}px,
-      rgba(255,255,255,0.3),
-      transparent 80%
-    )
-  `;
-
-    return (
-        <section id="home" className="min-h-screen flex flex-col justify-center items-center px-4 md:px-6 pt-20 relative overflow-hidden bg-neutral-950">
-
-            {/* Background Layers */}
-            <HeroBackground activeRole={activeRole} />
-
-            {/* Spotlight Effect Background - GPU accelerated */}
+      <AnimatePresence mode="wait">
+        {bootPhase < 2 ? (
+          <motion.div
+            key="boot"
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="flex flex-col items-center z-10 font-mono"
+          >
             <motion.div
-                className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100 z-0"
-                style={{
-                    background: spotlightBackground,
-                    willChange: 'background',
-                    contain: 'layout style paint',
-                    transform: 'translateZ(0)',
-                }}
+              initial={{ width: 0 }}
+              animate={{ width: 200 }}
+              transition={{ duration: 1.5, ease: "linear" }}
+              className="h-[1px] bg-accent mb-4"
             />
-
-            {/* Static Ambient Glow - GPU accelerated */}
-            <div
-                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] blur-[150px] rounded-full pointer-events-none opacity-20 z-0 transition-colors duration-1000 ${activeRole === 'developer' ? 'bg-cyan-900/40' : 'bg-fuchsia-900/40'}`}
-                style={{
-                    willChange: 'background-color',
-                    contain: 'layout style paint',
-                    transform: 'translateZ(0)',
-                }}
-            />
-
-            {/* Main Content */}
-            <div className="w-full max-w-[95vw] 2xl:max-w-full text-center space-y-12 md:space-y-16 z-10 relative">
-
+            <p className="text-neutral-500 text-sm tracking-widest uppercase mb-2">
+              {bootPhase === 0
+                ? "Mounting System..."
+                : "Initializing Architecture..."}
+            </p>
+            <div className="flex gap-1 text-xs text-accent opacity-50">
+              <span>[OK]</span>
+              <span>SYS_CORE</span>
+              {bootPhase === 1 && <span>/ VERIFIED</span>}
+            </div>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="main"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="z-10 w-full max-w-6xl px-6 md:px-8 mt-16"
+          >
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 w-full">
+              <div className="max-w-4xl">
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="flex justify-center relative z-50 scale-90 md:scale-100"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="flex items-center gap-4 mb-8"
                 >
-                    <RoleToggle activeRole={activeRole} onChange={setActiveRole} />
+                  <div className="h-[1px] w-12 bg-accent" />
+                  <span className="font-mono text-xs uppercase tracking-widest text-accent">
+                    System Online
+                  </span>
                 </motion.div>
 
-                <div className="relative group cursor-default py-4 min-h-[250px] md:min-h-[450px] flex items-center justify-center">
-                    {/* Spotlight follows mouse */}
-                    <motion.div
-                        className="absolute -inset-24 rounded-full opacity-10 blur-2xl bg-gradient-to-r from-neutral-800 via-white/10 to-neutral-800 group-hover:opacity-20 transition-opacity duration-500"
-                        style={{
-                            clipPath: "inset(0 0 0 0)",
-                            background: innerSpotlight,
-                        }}
-                    />
+                <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-heading font-extrabold tracking-tighter text-foreground leading-[0.95] mb-6 drop-shadow-2xl">
+                  <span className="block mb-2">
+                    {isDev ? "Dipen Magdani." : "Vajra The Astra"}
+                  </span>
+                  <span
+                    className={`block text-transparent leading-none h-52 bg-clip-text bg-gradient-to-r ${isDev ? "from-cyan-400 to-blue-600" : "from-fuchsia-400 to-pink-600"}`}
+                  >
+                    {isDev
+                      ? "Frontend Systems Engineer."
+                      : "Visual System Designer."}
+                  </span>
+                </h1>
 
-                    <div className="flex flex-col items-center justify-center relative w-full">
-                        <AnimatePresence mode="wait">
-                            {activeRole === 'developer' ? (
-                                <motion.div
-                                    key="developer-name"
-                                    variants={glitchVariants}
-                                    initial="hidden"
-                                    animate="visible"
-                                    exit="exit"
-                                    className="flex flex-col items-center relative w-full"
-                                >
-                                    {/* Flash effect */}
-                                    <motion.div
-                                        initial={{ opacity: 0.5 }}
-                                        animate={{ opacity: 0 }}
-                                        transition={{ duration: 0.3 }}
-                                        className="absolute inset-0 bg-cyan-500 blur-3xl z-0 pointer-events-none mix-blend-overlay opacity-30"
-                                    />
+                <p className="text-xl md:text-2xl text-neutral-400 font-light max-w-2xl leading-relaxed mt-8">
+                  {isDev
+                    ? "Constructing high-performance architecture and interactive interfaces with uncompromised engineering precision."
+                    : "Crafting immersive visual topologies and intuitive experiences focused on systematic motion and aesthetic clarity."}
+                </p>
+              </div>
 
-                                    <h1 className="text-[2.5rem] xs:text-5xl sm:text-7xl md:text-6xl lg:text-[7rem] xl:text-[7rem] 2xl:text-[9rem] font-heading font-extrabold tracking-tighter relative z-10 select-none leading-[1em] text-center drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">
-                                        <span className="block glitch text-white" data-text="DIPEN">DIPEN</span>
-                                        <span className="block glitch text-neutral-600 transition-colors duration-700 group-hover:text-cyan-700" data-text="MAGDANI">MAGDANI</span>
-                                    </h1>
-
-                                    <motion.div
-                                        initial={{ opacity: 0, letterSpacing: "1em" }}
-                                        animate={{ opacity: 1, letterSpacing: "0.4em" }}
-                                        transition={{ delay: 0.2, duration: 0.8 }}
-                                        className="mt-6 text-[10px] md:text-xs font-mono text-cyan-500 uppercase font-bold tracking-[0.2em] md:tracking-[0.4em] drop-shadow-[0_0_10px_rgba(6,182,212,0.5)]"
-                                    >
-                                        &lt; SYSTEM_ONLINE /&gt;
-                                    </motion.div>
-                                </motion.div>
-                            ) : (
-                                <motion.div
-                                    key="designer-name"
-                                    variants={glitchVariants}
-                                    initial="hidden"
-                                    animate="visible"
-                                    exit="exit"
-                                    className="flex flex-col items-center relative w-full"
-                                >
-                                    {/* Flash effect */}
-                                    <motion.div
-                                        initial={{ opacity: 0.5 }}
-                                        animate={{ opacity: 0 }}
-                                        transition={{ duration: 0.3 }}
-                                        className="absolute inset-0 bg-fuchsia-500 blur-3xl z-0 pointer-events-none mix-blend-overlay opacity-30"
-                                    />
-
-                                    <h1 className="text-[2.5rem] xs:text-5xl sm:text-7xl md:text-6xl lg:text-[7rem] xl:text-[7rem] 2xl:text-[9rem] font-heading font-extrabold tracking-tighter relative z-10 select-none leading-[1em] text-center drop-shadow-[0_0_15px_rgba(232,121,249,0.3)]">
-                                        <span className="block glitch text-white" data-text="VAJRA">VAJRA</span>
-                                        <span className="block glitch text-neutral-400 transition-colors duration-700 group-hover:text-fuchsia-600" data-text="THE ASTRA">
-                                            <span className="opacity-80">THE</span> ASTRA
-                                        </span>
-                                    </h1>
-
-                                    <motion.div
-                                        initial={{ opacity: 0, letterSpacing: "1em" }}
-                                        animate={{ opacity: 1, letterSpacing: "0.4em" }}
-                                        transition={{ delay: 0.2, duration: 0.8 }}
-                                        className="mt-4 md:mt-6 text-[10px] md:text-xs font-mono text-fuchsia-500 uppercase font-bold tracking-[0.2em] md:tracking-[0.4em] drop-shadow-[0_0_10px_rgba(232,121,249,0.5)]"
-                                    >
-                                        &lt; IDENTITY_DETECTED /&gt;
-                                    </motion.div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </div>
+              {/* Telemetry Panel */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="hidden lg:flex flex-col gap-4 font-mono text-xs bg-neutral-900/40 p-4 border border-white/5 backdrop-blur rounded shrink-0 w-64 shadow-2xl"
+              >
+                <div className="text-neutral-500 uppercase flex justify-between border-b border-white/5 pb-2">
+                  <span>Status</span>
+                  <span className="text-green-400">Operational</span>
                 </div>
-
-                <div className="h-10 overflow-hidden relative">
-                    <AnimatePresence mode="wait">
-                        <motion.h2
-                            key={activeRole}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            transition={{ duration: 0.5, ease: [0.33, 1, 0.68, 1] }}
-                            className={`text-base md:text-2xl font-medium tracking-[0.2em] h-10 uppercase absolute w-full left-0 right-0 flex items-center justify-center gap-4 ${activeRole === 'developer' ? 'text-cyan-100' : 'text-fuchsia-100'
-                                }`}
-                        >
-                            <span className={`w-8 h-px ${activeRole === 'developer' ? 'bg-cyan-500' : 'bg-fuchsia-500'}`}></span>
-                            {activeRole === 'developer' ? 'Frontend Developer' : 'Visual Designer'}
-                            <span className={`w-8 h-px ${activeRole === 'developer' ? 'bg-cyan-500' : 'bg-fuchsia-500'}`}></span>
-                        </motion.h2>
-                    </AnimatePresence>
+                <div className="text-neutral-500 uppercase flex justify-between border-b border-white/5 pb-2">
+                  <span>Core Engine</span>
+                  <span className="text-foreground">React 19 / Next.js</span>
                 </div>
-
-                <motion.p
-                    key={activeRole + "-desc"}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.8, delay: 0.6 }}
-                    className="max-w-xl mx-auto text-base md:text-xl text-neutral-400 leading-relaxed font-light tracking-wide px-4"
-                >
-                    {activeRole === 'developer'
-                        ? "Crafting scalable, high-performance web applications with precision engineering."
-                        : "Designing visual systems and immersive digital experiences with purposeful aesthetics."}
-                </motion.p>
+                <div className="text-neutral-500 uppercase flex justify-between border-b border-white/5 pb-2">
+                  <span>Rendering</span>
+                  <span className="text-foreground">60 FPS Locked</span>
+                </div>
+                <div className="text-neutral-500 uppercase flex justify-between">
+                  <span>Current Mode</span>
+                  <span className="text-accent">
+                    {isDev ? "ENG_MODE" : "DSN_MODE"}
+                  </span>
+                </div>
+              </motion.div>
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.5, duration: 1 }}
-                className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 text-neutral-600"
-            >
-                <FiArrowDown className="w-5 h-5 animate-bounce" />
-            </motion.div>
-
-        </section>
-    );
+      {/* Scroll Indicator */}
+      {bootPhase === 2 && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer z-20 group"
+          onClick={scrollToWork}
+        >
+          <span className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest group-hover:text-accent transition-colors">
+            Access Modules
+          </span>
+          <ArrowDown
+            size={16}
+            className="text-neutral-600 group-hover:text-accent animate-bounce transition-colors"
+          />
+        </motion.div>
+      )}
+    </section>
+  );
 }
