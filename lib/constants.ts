@@ -112,51 +112,51 @@ const POSTER_IMAGES = [
 
 export const PROJECTS: Project[] = [
   // Developer Projects
-  {
-    id: 'magic-data',
-    title: 'MagicData',
-    description: 'Transforms complex data workflows into seamless experiences. Build, automate, and scale pipelines with an intuitive expression builder and no-code interface.',
-    role: 'developer',
-    tags: ['React', 'TanStack', 'Zod', 'Framer Motion'],
-    image: '/projects/magicdata.webp',
-    category: 'web'
-  },
-  {
-    id: 'riddhi-gsp',
-    title: 'Riddhi GSP Admin',
-    description: 'Enterprise-grade dashboard for GSP operations. Features real-time analytics, SDO management, and high-performance order processing.',
-    role: 'developer',
-    tags: ['React 18', 'Redux', 'AG Grid', 'SASS'],
-    image: '/projects/riddhigsp.webp',
-    category: 'web'
-  },
-  {
-    id: 'fest-pass',
-    title: 'Fest Pass Corporate',
-    description: 'Modern career portal for a digital entertainment giant. Features interactive job search, real-time filtering, and a sophisticated design system.',
-    role: 'developer',
-    tags: ['Next.js 15', 'Tailwind', 'Husky'],
-    image: '/projects/festpass.webp',
-    category: 'web'
-  },
-  {
-    id: 'promobeacon',
-    title: 'PromoBeacon',
-    description: 'Comprehensive SaaS for promotional workflows. Automates order entry, artwork proofing, and vendor confirmation with multi-tenant support.',
-    role: 'developer',
-    tags: ['React 18', 'Hook Form', 'TanStack'],
-    image: '/projects/promobeacon.webp',
-    category: 'web'
-  },
-  {
-    id: 'pv-tool',
-    title: 'PV Tool (Apcer)',
-    description: 'Enterprise admin dashboard for Life Sciences. Features Azure AD security, automated API integration, and modular architecture.',
-    role: 'developer',
-    tags: ['React 19', 'MSAL', 'Docker', 'TanStack'],
-    image: '/projects/pvtool.webp',
-    category: 'web'
-  },
+  // {
+  //   id: 'magic-data',
+  //   title: 'MagicData',
+  //   description: 'Transforms complex data workflows into seamless experiences. Build, automate, and scale pipelines with an intuitive expression builder and no-code interface.',
+  //   role: 'developer',
+  //   tags: ['React', 'TanStack', 'Zod', 'Framer Motion'],
+  //   image: '/projects/magicdata.webp',
+  //   category: 'web'
+  // },
+  // {
+  //   id: 'riddhi-gsp',
+  //   title: 'Riddhi GSP Admin',
+  //   description: 'Enterprise-grade dashboard for GSP operations. Features real-time analytics, SDO management, and high-performance order processing.',
+  //   role: 'developer',
+  //   tags: ['React 18', 'Redux', 'AG Grid', 'SASS'],
+  //   image: '/projects/riddhigsp.webp',
+  //   category: 'web'
+  // },
+  // {
+  //   id: 'fest-pass',
+  //   title: 'Fest Pass Corporate',
+  //   description: 'Modern career portal for a digital entertainment giant. Features interactive job search, real-time filtering, and a sophisticated design system.',
+  //   role: 'developer',
+  //   tags: ['Next.js 15', 'Tailwind', 'Husky'],
+  //   image: '/projects/festpass.webp',
+  //   category: 'web'
+  // },
+  // {
+  //   id: 'promobeacon',
+  //   title: 'PromoBeacon',
+  //   description: 'Comprehensive SaaS for promotional workflows. Automates order entry, artwork proofing, and vendor confirmation with multi-tenant support.',
+  //   role: 'developer',
+  //   tags: ['React 18', 'Hook Form', 'TanStack'],
+  //   image: '/projects/promobeacon.webp',
+  //   category: 'web'
+  // },
+  // {
+  //   id: 'pv-tool',
+  //   title: 'PV Tool (Apcer)',
+  //   description: 'Enterprise admin dashboard for Life Sciences. Features Azure AD security, automated API integration, and modular architecture.',
+  //   role: 'developer',
+  //   tags: ['React 19', 'MSAL', 'Docker', 'TanStack'],
+  //   image: '/projects/pvtool.webp',
+  //   category: 'web'
+  // },
   {
     id: 'harmoniq',
     title: 'Harmoniq',
